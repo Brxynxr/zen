@@ -30,6 +30,7 @@ El script crea automáticamente enlaces simbólicos hacia:
 | Skill | Descripción | Triggers principales |
 | :--- | :--- | :--- |
 | **[`systematic-debugging`](./skills/systematic-debugging/SKILL.md)** | Metodología rigurosa de 4 fases para resolver bugs encontrando la causa raíz antes de proponer código o parches cosméticos. Regla de oro: *No fixes without root cause investigation first*. | `bug`, `test failure`, `unexpected behavior`, `crashes`, `performance issue` |
+| **[`webapp-testing`](./skills/webapp-testing/SKILL.md)** | Toolkit completo de Anthropic para probar aplicaciones web locales con Playwright (Python). Maneja el ciclo de vida de servidores locales, captura de pantalla de interfaz, inspección de selectores del DOM y captura de logs de consola. | `webapp testing`, `frontend verification`, `playwright`, `ui debugging`, `browser test` |
 
 ---
 

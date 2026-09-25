@@ -25,32 +25,32 @@ El script crea automáticamente enlaces simbólicos hacia:
 
 ---
 
-## 📚 Catálogo de Skills
+## 📚 Catálogo de Skills Instaladas
 
+### 🤖 1. Optimización del Agente y Flujo de Trabajo
 | Skill | Descripción | Triggers principales |
 | :--- | :--- | :--- |
-| **[`doc-coauthoring`](./skills/doc-coauthoring/SKILL.md)** | Redacción guiada y estructurada de documentación técnica de proyectos (RFCs, PRDs, specs de arquitectura) en 3 etapas: Context Gathering, Refinement y Reader Testing. | `write doc`, `rfc`, `prd`, `spec`, `documentacion`, `architecture doc` |
-| **[`frontend-design`](./skills/frontend-design/SKILL.md)** | Guía de diseño visual intencional y distintivo para UIs frontend. Evita los patrones predecibles y genéricos de la IA (tarjetas SaaS idénticas, gradientes cliché, tipografías estándar) forzando decisiones estéticas meditadas, paletas armoniosas y tipografía con carácter. | `frontend design`, `ui design`, `css layout`, `styling`, `typography`, `visual aesthetics` |
-| **[`session-handoff`](./skills/session-handoff/SKILL.md)** | Documentación automática del estado y progreso de la sesión en archivos Markdown (`docs/sessions/` o `HANDOFF.md`). Captura qué se hizo, decisiones técnicas, estado de git y genera un comando de reanudación inmediato para la siguiente sesión. | `handoff`, `guardar progreso`, `documentar sesion`, `resumen de sesion`, `continue later`, `terminamos por hoy` |
-| **[`systematic-debugging`](./skills/systematic-debugging/SKILL.md)** | Metodología rigurosa de 4 fases para resolver bugs encontrando la causa raíz antes de proponer código o parches cosméticos. Regla de oro: *No fixes without root cause investigation first*. | `bug`, `test failure`, `unexpected behavior`, `crashes`, `performance issue` |
-| **[`test-driven-development`](./skills/test-driven-development/SKILL.md)** | Disciplina estricta de desarrollo guiado por pruebas (TDD: Red-Green-Refactor). Regla de oro: *No production code without a failing test first*. Asegura que cada cambio tenga cobertura verificable. Incluye guía de diseño de tests limpios. | `tdd`, `test driven`, `unit test`, `write test`, `red green refactor` |
-| **[`verification-before-completion`](./skills/verification-before-completion/SKILL.md)** | Regla de oro: *No completion claims without fresh verification evidence*. Obliga a ejecutar comandos de verificación (tests, linters, builds) y revisar la evidencia real antes de cantar victoria o hacer commits/PRs. | `done`, `fixed`, `verification`, `commit`, `pull request`, `ready` |
-| **[`webapp-testing`](./skills/webapp-testing/SKILL.md)** | Toolkit completo de Anthropic para probar aplicaciones web locales con Playwright (Python). Maneja el ciclo de vida de servidores locales, captura de pantalla de interfaz, inspección de selectores del DOM y captura de logs de consola. | `webapp testing`, `frontend verification`, `playwright`, `ui debugging`, `browser test` |
+| **[`subagent-driven-development`](./skills/subagent-driven-development/SKILL.md)** | Ejecuta planes despachando subagentes frescos por tarea y subagentes revisores independientes para mantener el contexto limpio y acelerar la entrega. | `subagent`, `plan execution`, `parallel work`, `delegate task` |
+| **[`writing-plans`](./skills/writing-plans/SKILL.md)** | Crea planes de implementación detallados y atómicos (tareas de 5-15 min) antes de tocar código, evitando que el agente se pierda o alucine. | `plan`, `implementation plan`, `plan feature`, `breakdown` |
+| **[`using-git-worktrees`](./skills/using-git-worktrees/SKILL.md)** | Aísla el trabajo del agente en branches y carpetas de trabajo (*git worktrees*) separadas sin ensuciar ni alterar tu workspace activo. | `worktree`, `isolated workspace`, `branch work` |
+| **[`requesting-code-review`](./skills/requesting-code-review/SKILL.md)** | Autocrítica rigurosa: audita diffs contra estándares, reglas de proyecto e invariantes antes de pedir revisión humana. | `code review`, `review diff`, `review pr`, `audit changes` |
+| **[`clarify-ambiguity-first`](./skills/clarify-ambiguity-first/SKILL.md)** | Regla de oro: *No silent assumptions*. Si una tarea tiene ambigüedad crítica o múltiples caminos arquitectónicos, se detiene y pregunta antes de gastar tokens. | `ambiguity`, `clarify`, `options`, `decide architecture` |
 
----
+### 🛠️ 2. Disciplina de Ingeniería y Testing
+| Skill | Descripción | Triggers principales |
+| :--- | :--- | :--- |
+| **[`systematic-debugging`](./skills/systematic-debugging/SKILL.md)** | Metodología rigurosa de 4 fases para resolver bugs encontrando la causa raíz antes de proponer código. Regla: *No fixes without root cause investigation first*. | `bug`, `test failure`, `unexpected behavior`, `crashes`, `500 error` |
+| **[`verification-before-completion`](./skills/verification-before-completion/SKILL.md)** | Regla de oro: *No completion claims without fresh verification evidence*. Obliga a ejecutar tests/builds y comprobar salida exit 0 antes de cantar victoria. | `done`, `fixed`, `verification`, `commit`, `pull request`, `ready` |
+| **[`test-driven-development`](./skills/test-driven-development/SKILL.md)** | Disciplina TDD estricta (Red-Green-Refactor). Regla: *No production code without a failing test first*. Asegura cobertura limpia. | `tdd`, `test driven`, `unit test`, `write test`, `red green refactor` |
+| **[`webapp-testing`](./skills/webapp-testing/SKILL.md)** | Toolkit de Anthropic para probar aplicaciones web locales con Playwright (Python). Maneja arranque, pruebas e inspección visual de UIs automáticamente. | `webapp testing`, `frontend verification`, `playwright`, `ui debugging` |
 
-## 📁 Estructura del Repositorio
+### 🎨 3. Frontend y UI Intencional
+| Skill | Descripción | Triggers principales |
+| :--- | :--- | :--- |
+| **[`frontend-design`](./skills/frontend-design/SKILL.md)** | Diseño visual distintivo para UIs. Evita plantillas genéricas de IA forzando decisiones estéticas meditadas, paletas armoniosas y tipografía intencional. | `frontend design`, `ui design`, `css layout`, `styling`, `typography` |
 
-```text
-skill/
-├── README.md                   # Catálogo y documentación
-├── install.sh                  # Instalador multiplataforma
-└── skills/
-    └── systematic-debugging/
-        ├── SKILL.md            # Definición principal de la skill
-        ├── root-cause-tracing.md
-        ├── defense-in-depth.md
-        ├── condition-based-waiting.md
-        ├── condition-based-waiting-example.ts
-        └── find-polluter.sh
-```
+### 📝 4. Documentación y Continuidad de Sesiones
+| Skill | Descripción | Triggers principales |
+| :--- | :--- | :--- |
+| **[`session-handoff`](./skills/session-handoff/SKILL.md)** | Guarda el progreso de la sesión en Markdown (`docs/sessions/` o `HANDOFF.md`), registrando tareas hechas, cambios en git y un *resume prompt* para retomar sin fricción. | `handoff`, `guardar progreso`, `documentar sesion`, `resumen de sesion`, `terminamos por hoy` |
+| **[`doc-coauthoring`](./skills/doc-coauthoring/SKILL.md)** | Redacción colaborativa estructurada de documentación formal (RFCs, PRDs, specs de arquitectura) en 3 etapas: Context Gathering, Refinement y Reader Testing. | `write doc`, `rfc`, `prd`, `spec`, `documentacion`, `architecture doc` |

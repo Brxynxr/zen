@@ -22,6 +22,19 @@ cd ~/Projects/skill
 El instalador crea enlaces simbólicos automáticos hacia:
 - `~/.agents/skills/` (Estándar abierto para OpenCode, Claude Code, Cursor, Codex)
 - `~/.gemini/config/skills/` (Configuración global de Antigravity)
+- `~/.gemini/config/mcp_config.json` y `~/.config/opencode/mcp_config.json` (Servidores MCP)
+
+---
+
+## Servidores MCP Integrados (Cero API Keys)
+
+El repositorio incluye [`mcp_config.json`](./mcp_config.json) con servidores que operan localmente sin necesidad de claves de API externas:
+
+| Servidor MCP | Comando / Paquete | Función |
+| :--- | :--- | :--- |
+| **`context7`** | `@upstash/context7-mcp` | Consulta en vivo de documentación oficial y ejemplos de código vigentes para frameworks modernos (Next.js, React, Tailwind, Supabase), previniendo APIs obsoletas. |
+| **`playwright`** | `@playwright/mcp@latest` | Control de navegador headless/headed para navegar, interactuar con elementos DOM y capturar pantallas en pruebas de UI. |
+| **`docker`** | `@quantgeek/docker-mcp` | Gestión e inspección de contenedores locales, servicios de bases de datos y lectura de logs mediante el socket de Docker. |
 
 ---
 

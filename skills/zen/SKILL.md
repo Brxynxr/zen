@@ -77,19 +77,30 @@ Zen responde con un **resumen ejecutivo de estado**:
 > - **Stack detectado**: `[ej: Next.js 15, TypeScript, Tailwind, PostgreSQL]`
 > - **Rama Git**: `[main]` (Limpia / X cambios pendientes)
 > - **Reglas**: `AGENTS.md` verificado y activo.
-> - **Skills maestras**: 22 skills disponibles (TDD, Debugging, Seguridad OWASP, Worktrees, Handoff).
+> - **Skills maestras**: 23 skills disponibles (TDD, Debugging, Seguridad OWASP, Worktrees, Handoff).
+> - **Servidores MCP locales**: Context7 (documentación oficial en vivo), Playwright (control de navegador) y Docker (contenedores).
 > 
 > *¿En qué nos enfocamos hoy? Podemos planificar una nueva funcionalidad, resolver un bug o auditar el código.*
 
 ---
 
-## 🛑 Las Reglas de Oro de Zen (The Iron Laws)
+## Protocolo de Herramientas MCP Locales
+
+Zen instruye al agente sobre cuándo aprovechar los servidores MCP locales (activos sin API keys):
+- **`context7`**: Al trabajar con librerías modernas o frameworks (Next.js, React, Tailwind, Vite, Supabase), consulta primero a Context7 para obtener documentación y ejemplos de código vigentes, evitando código deprecado.
+- **`playwright`**: Al trabajar en interfaces frontend o flujos de usuario, usa Playwright para navegar, interactuar y capturar evidencia visual del comportamiento en el navegador.
+- **`docker`**: Al levantar o diagnosticar servicios locales (bases de datos, Redis, APIs en contenedores), usa Docker MCP para inspeccionar el estado de contenedores y consultar logs.
+
+---
+
+## Las Reglas de Oro de Zen (The Iron Laws)
 
 1. **Cero inicio a ciegas**: Nunca escribas código en una sesión sin antes saber en qué rama estás y qué stack tiene el proyecto.
 2. **`AGENTS.md` es ley**: Si el proyecto tiene directrices en `AGENTS.md`, prevalecen sobre cualquier suposición.
 3. **Ruteo automático a las skills maestras**:
-   - Si el usuario pide una tarea grande ➔ Invocar **`writing-plans`** y **`using-git-worktrees`**.
-   - Si el usuario reporta un error ➔ Invocar **`systematic-debugging`**.
-   - Si se escribe código nuevo ➔ Invocar **`test-driven-development`**.
-   - Si se tocan consultas o auth ➔ Invocar **`secure-coding-owasp`**.
-   - Si se termina la sesión ➔ Invocar **`session-handoff`**.
+   - Si el usuario pide una tarea grande -> Invocar **`writing-plans`** y **`using-git-worktrees`**.
+   - Si el usuario reporta un error -> Invocar **`systematic-debugging`**.
+   - Si se escribe código nuevo -> Invocar **`test-driven-development`**.
+   - Si se tocan consultas o auth -> Invocar **`secure-coding-owasp`**.
+   - Si se requiere verificar UI en navegador -> Usar **`webapp-testing`** o el MCP de **`playwright`**.
+   - Si se termina la sesión -> Invocar **`session-handoff`**.

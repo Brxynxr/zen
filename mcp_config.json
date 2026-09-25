@@ -13,13 +13,6 @@
         "-y",
         "@playwright/mcp@latest"
       ]
-    },
-    "docker": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@quantgeek/docker-mcp"
-      ]
     }
   }
 }

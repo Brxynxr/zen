@@ -90,7 +90,7 @@ Estado Zen: Proyecto Existente detectado en `[carpeta]`
 - Stack: [Tecnología / Framework detectado]
 - Git: Rama [branch] ([Limpia / X cambios pendientes])
 - Directrices: [AGENTS.md presente / Ausente (se puede aprovisionar)]
-- Herramientas: 24 skills maestras + 3 MCPs locales activos.
+- Herramientas: 24 skills maestras + 2 MCPs locales activos.
 
 ¿Qué atacamos hoy? Elige una opción (1-5) o escribe tu instrucción:
 
@@ -108,7 +108,6 @@ Estado Zen: Proyecto Existente detectado en `[carpeta]`
 Zen instruye al agente sobre cuándo aprovechar los servidores MCP locales (activos sin API keys):
 - **`context7`**: Al trabajar con librerías modernas o frameworks (Next.js, React, Tailwind, Vite, Supabase), consulta primero a Context7 para obtener documentación y ejemplos de código vigentes, evitando código deprecado.
 - **`playwright`**: Al trabajar en interfaces frontend o flujos de usuario, usa Playwright para navegar, interactuar y capturar evidencia visual del comportamiento en el navegador.
-- **`docker`**: Al levantar o diagnosticar servicios locales (bases de datos, Redis, APIs en contenedores), usa Docker MCP para inspeccionar el estado de contenedores y consultar logs.
 
 ---
 

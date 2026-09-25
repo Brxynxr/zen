@@ -34,7 +34,6 @@ El repositorio incluye [`mcp_config.json`](./mcp_config.json) con servidores que
 | :--- | :--- | :--- |
 | **`context7`** | `@upstash/context7-mcp` | Consulta en vivo de documentación oficial y ejemplos de código vigentes para frameworks modernos (Next.js, React, Tailwind, Supabase), previniendo APIs obsoletas. |
 | **`playwright`** | `@playwright/mcp@latest` | Control de navegador headless/headed para navegar, interactuar con elementos DOM y capturar pantallas en pruebas de UI. |
-| **`docker`** | `@quantgeek/docker-mcp` | Gestión e inspección de contenedores locales, servicios de bases de datos y lectura de logs mediante el socket de Docker. |
 
 ---
 

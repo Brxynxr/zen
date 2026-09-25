@@ -25,12 +25,21 @@ El script crea automáticamente enlaces simbólicos hacia:
 
 ---
 
-## 📚 Catálogo Completo de Skills
+## 🧘 Orquestador Maestro: `zen`
+
+| Skill | Descripción | Triggers principales |
+| :--- | :--- | :--- |
+| **[`zen`](./skills/zen/SKILL.md)** | **Punto de entrada y orquestador maestro**. Al decir "hola" o iniciar un proyecto, realiza reconocimiento silencioso, inicializa `AGENTS.md` si no existe, audita la rama/stack y rutea las tareas hacia las 22 skills especializadas. | `hola`, `hello`, `inicio`, `empezar`, `arrancar`, `zen`, `onboarding` |
+
+---
+
+## 📚 Catálogo Completo de Skills (23 Skills)
 
 ### 🤖 1. Optimización del Agente y Flujo de Trabajo
 | Skill | Descripción | Triggers principales |
 | :--- | :--- | :--- |
-| **[`subagent-driven-development`](./skills/subagent-driven-development/SKILL.md)** | Ejecuta planes despachando subagentes frescos por tarea y subagentes revisores independientes para mantener el contexto limpio y acelerar la entrega. | `subagent`, `plan execution`, `parallel work`, `delegate task` |
+| **[`zen`](./skills/zen/SKILL.md)** | Orquestador maestro de onboarding, reconocimiento silencioso y provisión automática de `AGENTS.md`. | `hola`, `inicio`, `empezar`, `zen` |
+| **[`subagent-driven-development`](./skills/subagent-driven-development/SKILL.md)** | Ejecuta planes despachando subagentes frescos por tarea y subagentes revisores independientes para mantener el contexto limpio. | `subagent`, `plan execution`, `parallel work`, `delegate task` |
 | **[`writing-plans`](./skills/writing-plans/SKILL.md)** | Crea planes de implementación detallados y atómicos (tareas de 5-15 min) antes de tocar código, evitando que el agente se pierda o alucine. | `plan`, `implementation plan`, `plan feature`, `breakdown` |
 | **[`using-git-worktrees`](./skills/using-git-worktrees/SKILL.md)** | Aísla el trabajo del agente en branches y carpetas de trabajo (*git worktrees*) separadas sin ensuciar ni alterar tu workspace activo. | `worktree`, `isolated workspace`, `branch work` |
 | **[`requesting-code-review`](./skills/requesting-code-review/SKILL.md)** | Autocrítica rigurosa: audita diffs contra estándares, reglas de proyecto e invariantes antes de pedir revisión humana. | `code review`, `review diff`, `review pr`, `audit changes` |

@@ -1,79 +1,118 @@
-# 🛠️ Developer Agent Skills Repository
+# Developer Agent Skills
 
-Repositorio centralizado de **Skills** de desarrollo de software para potenciar flujos de trabajo en **Antigravity (AGY)**, **OpenCode**, **Claude Code** y cualquier agente de IA compatible con el estándar abierto `.agents/skills`.
+Repositorio centralizado de habilidades (Skills) de ingeniería de software para asistentes de IA basados en agentes (**Antigravity**, **OpenCode**, **Claude Code** y herramientas compatibles con el estándar `.agents/skills`).
 
 ---
 
-## ⚡ Instalación Rápida (Cualquier máquina)
+## Instalación Rápida
 
-Una vez subas este repositorio a GitHub, podrás instalar todas tus skills en cualquier ordenador nuevo con un solo comando:
+### Instalación Remota (Nueva máquina)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/TU_USUARIO/skill/main/install.sh | bash
 ```
 
-O si ya clonaste el repositorio localmente:
+### Instalación Local
 
 ```bash
 cd ~/Projects/skill
 ./install.sh
 ```
 
-El script crea automáticamente enlaces simbólicos hacia:
-- `~/.agents/skills/` (estándar abierto para OpenCode, Claude Code, Antigravity, etc.)
-- `~/.gemini/config/skills/` (configuración global de Antigravity)
+El instalador crea enlaces simbólicos automáticos hacia:
+- `~/.agents/skills/` (Estándar abierto para OpenCode, Claude Code, Cursor, Codex)
+- `~/.gemini/config/skills/` (Configuración global de Antigravity)
 
 ---
 
-## 🧘 Orquestador Maestro: `zen`
+## Orquestador Principal: Zen
 
-| Skill | Descripción | Triggers principales |
+| Skill | Descripción | Triggers |
 | :--- | :--- | :--- |
-| **[`zen`](./skills/zen/SKILL.md)** | **Punto de entrada y orquestador maestro**. Al decir "hola" o iniciar un proyecto, realiza reconocimiento silencioso, inicializa `AGENTS.md` si no existe, audita la rama/stack y rutea las tareas hacia las 22 skills especializadas. | `hola`, `hello`, `inicio`, `empezar`, `arrancar`, `zen`, `onboarding` |
+| **[`zen`](./skills/zen/SKILL.md)** | Punto de entrada y orquestador maestro. Al iniciar sesión o abrir un proyecto, efectúa reconocimiento de arquitectura, aprovisiona `AGENTS.md` si no existe y rutea tareas hacia las skills especializadas. | `hola`, `hello`, `inicio`, `empezar`, `arrancar`, `zen`, `onboarding` |
 
 ---
 
-## 📚 Catálogo Completo de Skills (23 Skills)
+## Catálogo de Skills (23 Habilidades)
 
-### 🤖 1. Optimización del Agente y Flujo de Trabajo
-| Skill | Descripción | Triggers principales |
-| :--- | :--- | :--- |
-| **[`zen`](./skills/zen/SKILL.md)** | Orquestador maestro de onboarding, reconocimiento silencioso y provisión automática de `AGENTS.md`. | `hola`, `inicio`, `empezar`, `zen` |
-| **[`subagent-driven-development`](./skills/subagent-driven-development/SKILL.md)** | Ejecuta planes despachando subagentes frescos por tarea y subagentes revisores independientes para mantener el contexto limpio. | `subagent`, `plan execution`, `parallel work`, `delegate task` |
-| **[`writing-plans`](./skills/writing-plans/SKILL.md)** | Crea planes de implementación detallados y atómicos (tareas de 5-15 min) antes de tocar código, evitando que el agente se pierda o alucine. | `plan`, `implementation plan`, `plan feature`, `breakdown` |
-| **[`using-git-worktrees`](./skills/using-git-worktrees/SKILL.md)** | Aísla el trabajo del agente en branches y carpetas de trabajo (*git worktrees*) separadas sin ensuciar ni alterar tu workspace activo. | `worktree`, `isolated workspace`, `branch work` |
-| **[`requesting-code-review`](./skills/requesting-code-review/SKILL.md)** | Autocrítica rigurosa: audita diffs contra estándares, reglas de proyecto e invariantes antes de pedir revisión humana. | `code review`, `review diff`, `review pr`, `audit changes` |
-| **[`clarify-ambiguity-first`](./skills/clarify-ambiguity-first/SKILL.md)** | Regla de oro: *No silent assumptions*. Si una tarea tiene ambigüedad crítica o múltiples caminos arquitectónicos, se detiene y pregunta antes de gastar tokens. | `ambiguity`, `clarify`, `options`, `decide architecture` |
+### 1. Optimización del Agente y Flujo de Trabajo
 
-### 🛡️ 2. Arquitectura, Backend, Resiliencia y Seguridad
-| Skill | Descripción | Triggers principales |
+| Skill | Descripción | Triggers |
 | :--- | :--- | :--- |
-| **[`secure-coding-owasp`](./skills/secure-coding-owasp/SKILL.md)** | Defensas OWASP Top 10: consultas parametrizadas obligatorias, sanitización XSS, hashing Argon2/Bcrypt, cookies HttpOnly, CORS estricto y cero credenciales hardcodeadas. | `auth`, `login`, `token`, `endpoint`, `cors`, `sql query`, `security` |
-| **[`clean-architecture-patterns`](./skills/clean-architecture-patterns/SKILL.md)** | Separación de capas (Domain, Application, Infrastructure), principios SOLID, patrón Repositorio y DTOs para mantener el negocio agnóstico de frameworks. | `architecture`, `refactor`, `clean code`, `repository pattern`, `service layer` |
-| **[`resilient-error-handling`](./skills/resilient-error-handling/SKILL.md)** | Estandarización de errores HTTP vía RFC 7807 (Problem Details), timeouts obligatorios en red, backoff exponencial con jitter y logging estructurado sin fugar PII. | `error handling`, `exception`, `try catch`, `api error`, `retry`, `logging` |
-| **[`architecture-decision-records`](./skills/architecture-decision-records/SKILL.md)** | Redacción de registros de decisiones arquitectónicas (ADRs) bajo el formato Nygard (`docs/adr/`) para documentar el por qué y los trade-offs de cada elección técnica. | `adr`, `architecture decision`, `design doc`, `rfc` |
+| **[`zen`](./skills/zen/SKILL.md)** | Reconocimiento de entorno, detección de stack y provisión automática de directrices del proyecto. | `hola`, `inicio`, `empezar`, `zen` |
+| **[`subagent-driven-development`](./skills/subagent-driven-development/SKILL.md)** | Despacho de subagentes aislados por tarea con revisión independiente para preservar la ventana de contexto. | `subagent`, `plan execution`, `parallel work`, `delegate task` |
+| **[`writing-plans`](./skills/writing-plans/SKILL.md)** | Creación de planes de implementación atómicos (5-15 min) antes de modificar código fuente. | `plan`, `implementation plan`, `plan feature`, `breakdown` |
+| **[`using-git-worktrees`](./skills/using-git-worktrees/SKILL.md)** | Aislamiento de ramas y ejecución paralela mediante Git Worktrees sin alterar el workspace principal. | `worktree`, `isolated workspace`, `branch work` |
+| **[`requesting-code-review`](./skills/requesting-code-review/SKILL.md)** | Autoauditoría y validación de diffs contra invariantes del proyecto antes de solicitar revisión humana. | `code review`, `review diff`, `review pr`, `audit changes` |
+| **[`clarify-ambiguity-first`](./skills/clarify-ambiguity-first/SKILL.md)** | Detención y consulta estructurada ante requisitos ambiguos o decisiones arquitectónicas divergentes. | `ambiguity`, `clarify`, `options`, `decide architecture` |
 
-### 🌐 3. Calidad Web, Frontend y Accesibilidad (Suite Addy Osmani + Anthropic)
-| Skill | Descripción | Triggers principales |
-| :--- | :--- | :--- |
-| **[`web-quality-audit`](./skills/web-quality-audit/SKILL.md)** | Auditoría integral de calidad web basada en Google Lighthouse: rendimiento, accesibilidad, buenas prácticas y SEO en un solo comando. | `web quality`, `lighthouse`, `site audit`, `quality check` |
-| **[`core-web-vitals`](./skills/core-web-vitals/SKILL.md)** | Diagnóstico y optimización específica de métricas críticas de Google: LCP (carga visual), INP (latencia de interacción) y CLS (estabilidad de layout). | `core web vitals`, `lcp`, `inp`, `cls`, `page speed` |
-| **[`accessibility`](./skills/accessibility/SKILL.md)** | Cumplimiento estricto WCAG: navegación por teclado, roles/atributos ARIA correctos, contraste y lectores de pantalla. | `accessibility`, `a11y`, `wcag`, `screen reader`, `aria` |
-| **[`performance`](./skills/performance/SKILL.md)** | Optimización profunda de carga: reducción de bundle size, code-splitting, lazy loading de imágenes, optimización de fuentes y métricas RUM. | `performance`, `bundle size`, `optimize load`, `memory` |
-| **[`best-practices`](./skills/best-practices/SKILL.md)** | Estándares web modernos: HTTPS, cabeceras seguras, metaetiquetas y priorización de APIs nativas del navegador sobre librerías JS pesadas. | `best practices`, `modern web`, `web security`, `browser apis` |
-| **[`seo`](./skills/seo/SKILL.md)** | Optimización técnica de motores de búsqueda: metadatos, datos estructurados Schema.org, Open Graph, sitemaps y canonicals. | `seo`, `search engine`, `metadata`, `schema.org`, `open graph` |
-| **[`frontend-design`](./skills/frontend-design/SKILL.md)** | Diseño visual distintivo para UIs. Evita plantillas genéricas de IA forzando decisiones estéticas meditadas, paletas armoniosas y tipografía intencional. | `frontend design`, `ui design`, `css layout`, `styling`, `typography` |
+### 2. Arquitectura, Backend, Resiliencia y Seguridad
 
-### 🧪 4. Disciplina de Ingeniería y Testing
-| Skill | Descripción | Triggers principales |
+| Skill | Descripción | Triggers |
 | :--- | :--- | :--- |
-| **[`systematic-debugging`](./skills/systematic-debugging/SKILL.md)** | Metodología rigurosa de 4 fases para resolver bugs encontrando la causa raíz antes de proponer código. Regla: *No fixes without root cause investigation first*. | `bug`, `test failure`, `unexpected behavior`, `crashes`, `500 error` |
-| **[`verification-before-completion`](./skills/verification-before-completion/SKILL.md)** | Regla de oro: *No completion claims without fresh verification evidence*. Obliga a ejecutar tests/builds y comprobar salida exit 0 antes de cantar victoria. | `done`, `fixed`, `verification`, `commit`, `pull request`, `ready` |
-| **[`test-driven-development`](./skills/test-driven-development/SKILL.md)** | Disciplina TDD estricta (Red-Green-Refactor). Regla: *No production code without a failing test first*. Asegura cobertura limpia. | `tdd`, `test driven`, `unit test`, `write test`, `red green refactor` |
-| **[`webapp-testing`](./skills/webapp-testing/SKILL.md)** | Toolkit de Anthropic para probar aplicaciones web locales con Playwright (Python). Maneja arranque, pruebas e inspección visual de UIs automáticamente. | `webapp testing`, `frontend verification`, `playwright`, `ui debugging` |
+| **[`secure-coding-owasp`](./skills/secure-coding-owasp/SKILL.md)** | Estándares OWASP Top 10: consultas parametrizadas, sanitización XSS, cookies HttpOnly y protección de secretos. | `auth`, `login`, `token`, `endpoint`, `cors`, `sql query`, `security` |
+| **[`clean-architecture-patterns`](./skills/clean-architecture-patterns/SKILL.md)** | Clean Architecture, DDD, desacoplamiento de capas (Dominio, Aplicación, Infraestructura) y principios SOLID. | `architecture`, `refactor`, `clean code`, `repository pattern`, `service layer` |
+| **[`resilient-error-handling`](./skills/resilient-error-handling/SKILL.md)** | Respuestas de error estandarizadas con RFC 7807, timeouts obligatorios, backoff exponencial y logs estructurados. | `error handling`, `exception`, `try catch`, `api error`, `retry`, `logging` |
+| **[`architecture-decision-records`](./skills/architecture-decision-records/SKILL.md)** | Generación y mantenimiento de Architecture Decision Records (formato Nygard) en `docs/adr/`. | `adr`, `architecture decision`, `design doc`, `rfc` |
 
-### 📝 5. Documentación y Continuidad de Sesiones
-| Skill | Descripción | Triggers principales |
+### 3. Calidad Web, Frontend y Accesibilidad (Addy Osmani + Anthropic)
+
+| Skill | Descripción | Triggers |
 | :--- | :--- | :--- |
-| **[`session-handoff`](./skills/session-handoff/SKILL.md)** | Guarda el progreso de la sesión en Markdown (`docs/sessions/` o `HANDOFF.md`), registrando tareas hechas, cambios en git y un *resume prompt* para retomar sin fricción. | `handoff`, `guardar progreso`, `documentar sesion`, `resumen de sesion`, `terminamos por hoy` |
-| **[`doc-coauthoring`](./skills/doc-coauthoring/SKILL.md)** | Redacción colaborativa estructurada de documentación formal (RFCs, PRDs, specs de arquitectura) en 3 etapas: Context Gathering, Refinement y Reader Testing. | `write doc`, `rfc`, `prd`, `spec`, `documentacion`, `architecture doc` |
+| **[`web-quality-audit`](./skills/web-quality-audit/SKILL.md)** | Auditoría integral basada en Google Lighthouse: rendimiento, accesibilidad, buenas prácticas y SEO. | `web quality`, `lighthouse`, `site audit`, `quality check` |
+| **[`core-web-vitals`](./skills/core-web-vitals/SKILL.md)** | Diagnóstico y optimización de métricas de carga e interacción: LCP, INP y CLS. | `core web vitals`, `lcp`, `inp`, `cls`, `page speed` |
+| **[`accessibility`](./skills/accessibility/SKILL.md)** | Cumplimiento WCAG 2.2: soporte para lectores de pantalla, roles ARIA, navegación por teclado y contraste. | `accessibility`, `a11y`, `wcag`, `screen reader`, `aria` |
+| **[`performance`](./skills/performance/SKILL.md)** | Reducción de bundle size, code-splitting, lazy loading de recursos y optimización de renderizado. | `performance`, `bundle size`, `optimize load`, `memory` |
+| **[`best-practices`](./skills/best-practices/SKILL.md)** | Verificación de estándares web modernos, protocolos seguros y uso de APIs nativas del navegador. | `best practices`, `modern web`, `web security`, `browser apis` |
+| **[`seo`](./skills/seo/SKILL.md)** | Optimización técnica para motores de búsqueda: metadatos, datos estructurados Schema.org y sitemaps. | `seo`, `search engine`, `metadata`, `schema.org`, `open graph` |
+| **[`frontend-design`](./skills/frontend-design/SKILL.md)** | Diseño intencional de interfaces web, selección tipográfica deliberada y eliminación de patrones genéricos de IA. | `frontend design`, `ui design`, `css layout`, `styling`, `typography` |
+
+### 4. Disciplina de Ingeniería y Testing
+
+| Skill | Descripción | Triggers |
+| :--- | :--- | :--- |
+| **[`systematic-debugging`](./skills/systematic-debugging/SKILL.md)** | Metodología de causa raíz en 4 fases antes de proponer cambios o parches en código. | `bug`, `test failure`, `unexpected behavior`, `crashes`, `500 error` |
+| **[`verification-before-completion`](./skills/verification-before-completion/SKILL.md)** | Obligatoriedad de evidencia verificable (ejecución de tests con salida exit 0) antes de marcar tareas como resueltas. | `done`, `fixed`, `verification`, `commit`, `pull request`, `ready` |
+| **[`test-driven-development`](./skills/test-driven-development/SKILL.md)** | Ciclo Red-Green-Refactor estricto: ningún código de producción sin un test que falle previamente. | `tdd`, `test driven`, `unit test`, `write test`, `red green refactor` |
+| **[`webapp-testing`](./skills/webapp-testing/SKILL.md)** | Automatización de pruebas de interfaz en navegador con Playwright (Python) y gestión del servidor local. | `webapp testing`, `frontend verification`, `playwright`, `ui debugging` |
+
+### 5. Documentación y Continuidad
+
+| Skill | Descripción | Triggers |
+| :--- | :--- | :--- |
+| **[`session-handoff`](./skills/session-handoff/SKILL.md)** | Generación de bitácoras de sesión en Markdown (`docs/sessions/` o `HANDOFF.md`) con puntero de reanudación exacta. | `handoff`, `guardar progreso`, `documentar sesion`, `resumen de sesion`, `terminamos por hoy` |
+| **[`doc-coauthoring`](./skills/doc-coauthoring/SKILL.md)** | Redacción técnica asistida de documentos formales (RFCs, PRDs, specs de arquitectura) en tres fases. | `write doc`, `rfc`, `prd`, `spec`, `documentacion`, `architecture doc` |
+
+---
+
+## Estructura del Proyecto
+
+```text
+skill/
+├── README.md                   # Catálogo y documentación técnica
+├── install.sh                  # Instalador multiplataforma idempotente
+└── skills/
+    ├── accessibility/
+    ├── architecture-decision-records/
+    ├── best-practices/
+    ├── clarify-ambiguity-first/
+    ├── clean-architecture-patterns/
+    ├── core-web-vitals/
+    ├── doc-coauthoring/
+    ├── frontend-design/
+    ├── performance/
+    ├── requesting-code-review/
+    ├── resilient-error-handling/
+    ├── secure-coding-owasp/
+    ├── seo/
+    ├── session-handoff/
+    ├── subagent-driven-development/
+    ├── systematic-debugging/
+    ├── test-driven-development/
+    ├── using-git-worktrees/
+    ├── verification-before-completion/
+    ├── web-quality-audit/
+    ├── webapp-testing/
+    ├── writing-plans/
+    └── zen/
+```

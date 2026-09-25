@@ -46,13 +46,14 @@ El repositorio incluye [`mcp_config.json`](./mcp_config.json) con servidores que
 
 ---
 
-## Catálogo de Skills (23 Habilidades)
+## Catálogo de Skills (24 Habilidades)
 
 ### 1. Optimización del Agente y Flujo de Trabajo
 
 | Skill | Descripción | Triggers |
 | :--- | :--- | :--- |
 | **[`zen`](./skills/zen/SKILL.md)** | Reconocimiento de entorno, detección de stack y provisión automática de directrices del proyecto. | `hola`, `inicio`, `empezar`, `zen` |
+| **[`brainstorming`](./skills/brainstorming/SKILL.md)** | Definición de ideas en diseños y requerimientos técnicos estructurados antes de pasar a la fase de planificación o código. | `brainstorming`, `idea`, `new feature`, `requirements`, `scope` |
 | **[`subagent-driven-development`](./skills/subagent-driven-development/SKILL.md)** | Despacho de subagentes aislados por tarea con revisión independiente para preservar la ventana de contexto. | `subagent`, `plan execution`, `parallel work`, `delegate task` |
 | **[`writing-plans`](./skills/writing-plans/SKILL.md)** | Creación de planes de implementación atómicos (5-15 min) antes de modificar código fuente. | `plan`, `implementation plan`, `plan feature`, `breakdown` |
 | **[`using-git-worktrees`](./skills/using-git-worktrees/SKILL.md)** | Aislamiento de ramas y ejecución paralela mediante Git Worktrees sin alterar el workspace principal. | `worktree`, `isolated workspace`, `branch work` |

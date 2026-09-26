@@ -9,7 +9,7 @@ Repositorio centralizado de habilidades (Skills) de ingeniería de software para
 ### Instalación Remota (Nueva máquina)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/TU_USUARIO/skill/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Brxynxr/zen/main/install.sh | bash
 ```
 
 ### Instalación Local
@@ -44,6 +44,30 @@ El repositorio incluye [`mcp_config.json`](./mcp_config.json) con servidores que
 | **[`zen`](./skills/zen/SKILL.md)** | Punto de entrada y orquestador maestro. Al iniciar sesión o abrir un proyecto, efectúa reconocimiento de arquitectura, aprovisiona `AGENTS.md` si no existe y rutea tareas hacia las skills especializadas. | `hola`, `hello`, `inicio`, `empezar`, `arrancar`, `zen`, `onboarding` |
 
 ---
+
+## ¿Cómo Funciona la Activación? (Ciclo de Vida)
+
+No es necesario memorizar ni invocar manualmente las 24 habilidades una por una. El ecosistema funciona bajo el principio de **Progressive Disclosure** (activación contextual por ciclo de vida):
+
+```text
+               ┌────────────────────────────────────────────────────────┐
+               │              1. Inicio: Decir "hola" o "zen"           │
+               │         (Zen analiza el repo y genera AGENTS.md)       │
+               └───────────────────────────┬────────────────────────────┘
+                                           │
+       ┌───────────────────────────────────┼───────────────────────────────────┐
+       ▼                                   ▼                                   ▼
+[Fase 1: Ideación y Plan]        [Fase 2: Implementación]           [Fase 3: Verificación y Cierre]
+• brainstorming                 • clean-architecture-patterns      • systematic-debugging (si hay bugs)
+• clarify-ambiguity-first       • secure-coding-owasp              • webapp-testing (Playwright)
+• writing-plans                 • resilient-error-handling         • verification-before-completion
+• using-git-worktrees           • frontend-design / a11y           • requesting-code-review
+                                • context7 (docs oficiales)        • session-handoff (fin de sesión)
+```
+
+1. **Un solo comando inicial**: Al iniciar en un proyecto nuevo o existente, solo escribes `hola` o `zen`.
+2. **Contrato permanente (`AGENTS.md`)**: Zen detecta la arquitectura y redacta `AGENTS.md` en la raíz. Este archivo instruye contractualmente al agente para siempre sobre qué skills y MCPs usar.
+3. **Disparadores naturales por contexto**: Todas las skills quedan indexadas globalmente. Cuando mencionas un problema o inicias una tarea (por ejemplo *"hay un error 500"*, *"diseña el login"*, *"listo terminé"*), el modelo lee automáticamente las instrucciones de la skill requerida (`systematic-debugging`, `secure-coding-owasp`, `verification-before-completion`) y ejecuta con rigor de ingeniería.
 
 ## Catálogo de Skills (24 Habilidades)
 

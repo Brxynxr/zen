@@ -19,6 +19,7 @@ import socket
 import time
 import sys
 import argparse
+import tempfile
 
 def is_server_ready(port, timeout=30):
     """Wait for server to be ready by polling the port."""
@@ -59,25 +60,40 @@ def main():
         servers.append({'cmd': cmd, 'port': port})
 
     server_processes = []
+    log_files = []
 
     try:
         # Start all servers
         for i, server in enumerate(servers):
             print(f"Starting server {i+1}/{len(servers)}: {server['cmd']}")
 
-            # Use shell=True to support commands with cd and &&
+            log_file = tempfile.NamedTemporaryFile(
+                mode='w+',
+                prefix=f"server_{server['port']}_",
+                suffix=".log",
+                delete=False
+            )
+            log_files.append(log_file)
+
+            # Use log files to avoid OS pipe deadlock when servers produce heavy output
             process = subprocess.Popen(
                 server['cmd'],
                 shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+                stdout=log_file,
+                stderr=subprocess.STDOUT
             )
             server_processes.append(process)
 
             # Wait for this server to be ready
             print(f"Waiting for server on port {server['port']}...")
             if not is_server_ready(server['port'], timeout=args.timeout):
-                raise RuntimeError(f"Server failed to start on port {server['port']} within {args.timeout}s")
+                log_file.flush()
+                log_file.seek(0)
+                tail = "".join(log_file.readlines()[-25:])
+                raise RuntimeError(
+                    f"Server failed to start on port {server['port']} within {args.timeout}s.\n"
+                    f"Recent server output:\n{tail}"
+                )
 
             print(f"Server ready on port {server['port']}")
 
@@ -99,6 +115,12 @@ def main():
                 process.kill()
                 process.wait()
             print(f"Server {i+1} stopped")
+
+        for lf in log_files:
+            try:
+                lf.close()
+            except Exception:
+                pass
         print("All servers stopped")
 
 

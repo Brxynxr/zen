@@ -22,7 +22,7 @@ fail() {
 }
 
 command -v jq >/dev/null 2>&1 || \
-  fail "missing_dependency" "jq is required for safe JSON output" "Install: brew install jq"
+  fail "missing_dependency" "jq is required for safe JSON output" "Install jq (e.g. 'sudo apt install jq', 'brew install jq', or 'sudo dnf install jq')"
 
 [ $# -ge 1 ] || fail "invalid_input" "No target provided" "Usage: $0 <file_or_directory>"
 TARGET="$1"

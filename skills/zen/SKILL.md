@@ -11,8 +11,8 @@ description: >
 
 ## Overview
 
-**Core Principle:** The agent is an assistant, not a decision-maker. Breyner leads. The agent
-analyzes, proposes, warns, and audits — then waits for approval before acting. Every action
+**Core Principle:** The agent is an assistant, not a decision-maker. The Lead Engineer (Breyner / Project Owner) leads.
+The agent analyzes, proposes, warns, and audits — then waits for approval before acting. Every action
 is documented. Every finding is reported. Nothing happens silently.
 
 ---
@@ -94,7 +94,7 @@ Rama activa      : [branch] ([limpia / X cambios sin commitear])
 Tests            : [comando detectado / no detectado]
 Directrices      : [AGENTS.md presente | ausente — puedo generarlo]
 Último commit    : [mensaje del último commit]
-Skills activas   : 25 skills + 2 MCPs (context7 + playwright)
+Skills activas   : 27 skills + 4 MCPs (context7 + playwright + memory + sequential-thinking)
 
 Nota proactiva: [Si detecta algo relevante: deuda técnica visible, rama sin tests, 
 archivos sin commitear, dependencias desactualizadas, etc.]
@@ -115,6 +115,8 @@ archivos sin commitear, dependencias desactualizadas, etc.]
 - **`context7`**: ALWAYS consult before writing code that uses any modern framework or library.
   Never rely on internal training memory for framework APIs. Verify against live docs.
 - **`playwright`**: Use for any frontend work or UI verification. Capture visual evidence.
+- **`memory`**: Use for cross-session knowledge retention (persisting domain preferences, project conventions).
+- **`sequential-thinking`**: Use for dynamic multi-step reasoning in complex refactors and architecture designs.
 
 ---
 
@@ -154,6 +156,8 @@ not by the user typing their name:
 | Terminal outputs an error or test failure | `systematic-debugging` |
 | User says a task is done / about to commit | `code-auditor` → `verification-before-completion` → `requesting-code-review` |
 | Auth, DB queries, or secrets are touched | `secure-coding-owasp` |
+| Database schema, migration, or tables altered | `database-migrations-safety` |
+| CI/CD, GitHub Actions, or deployment altered | `ci-cd-pipelines` |
 | External API call or HTTP request is written | `resilient-error-handling` |
 | HTML, CSS, templates, or UI components are touched | `frontend-design` + `accessibility` |
 | Performance concern mentioned or detected | `core-web-vitals` + `performance` |
@@ -162,7 +166,7 @@ not by the user typing their name:
 
 ### LAW 4 — Pre-Commit Mandatory Audit Pipeline
 Before ANY `git commit` or `git push`, the agent MUST run this pipeline and report results
-to Breyner before proceeding:
+to the Lead Engineer (Breyner / Project Owner) before proceeding:
 
 ```text
 PRE-COMMIT PIPELINE:
@@ -171,7 +175,7 @@ PRE-COMMIT PIPELINE:
   [3] secure-coding-owasp → Quick OWASP pass on changed code.
   [4] requesting-code-review → Self-review of the git diff.
 
-THEN report to Breyner:
+THEN report to the Lead Engineer (Breyner):
   ✅ Pipeline passed — ready to commit. Awaiting your approval.
   ❌ Pipeline blocked — [list of issues]. Resolving before proceeding.
 ```

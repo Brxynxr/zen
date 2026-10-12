@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Lint & Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate JSON files
+        run: |
+          python3 -m json.tool mcp_config.json > /dev/null
+          python3 -m json.tool plugin.json > /dev/null
+          echo "✅ All JSON configuration files are valid."
+
+      - name: Validate Python scripts syntax
+        run: |
+          python3 -m py_compile skills/webapp-testing/scripts/with_server.py
+          echo "✅ Python scripts compiled without syntax errors."
+
+      - name: Validate YAML frontmatter in SKILL.md files
+        run: |
+          python3 - << 'EOF'
+          import glob, sys
+
+          skill_files = glob.glob("skills/*/SKILL.md")
+          if not skill_files:
+              print("❌ No skill files found!")
+              sys.exit(1)
+
+          failed = False
+          for f in sorted(skill_files):
+              with open(f, 'r', encoding='utf-8') as fh:
+                  content = fh.read()
+              if not content.startswith("---"):
+                  print(f"❌ Missing frontmatter start in {f}")
+                  failed = True
+                  continue
+              parts = content.split("---", 2)
+              if len(parts) < 3:
+                  print(f"❌ Incomplete frontmatter in {f}")
+                  failed = True
+                  continue
+              front = parts[1]
+              if "name:" not in front or "description:" not in front:
+                  print(f"❌ Missing required name/description in {f}")
+                  failed = True
+
+          if failed:
+              sys.exit(1)
+          print(f"✅ Verified frontmatter for {len(skill_files)} skills.")
+          EOF

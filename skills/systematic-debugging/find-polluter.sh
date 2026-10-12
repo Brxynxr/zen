@@ -5,14 +5,16 @@
 
 set -e
 
-if [ $# -ne 2 ]; then
-  echo "Usage: $0 <file_to_check> <test_pattern>"
-  echo "Example: $0 '.git' 'src/**/*.test.ts'"
+if [ $# -lt 2 ] || [ $# -gt 3 ]; then
+  echo "Usage: $0 <file_to_check> <test_pattern> [test_command]"
+  echo "Example: $0 '.git' 'src/**/*.test.ts' 'npm test'"
+  echo "Example: $0 'test.db' 'tests/**/*.py' 'pytest'"
   exit 1
 fi
 
 POLLUTION_CHECK="$1"
 TEST_PATTERN="$2"
+TEST_RUNNER="${3:-${TEST_RUNNER:-npm test}}"
 
 echo "🔍 Searching for test that creates: $POLLUTION_CHECK"
 echo "Test pattern: $TEST_PATTERN"
@@ -48,7 +50,7 @@ for TEST_FILE in $TEST_FILES; do
   echo "[$COUNT/$TOTAL] Testing: $TEST_FILE"
 
   # Run the test
-  npm test "$TEST_FILE" > /dev/null 2>&1 || true
+  $TEST_RUNNER "$TEST_FILE" > /dev/null 2>&1 || true
 
   # Check if pollution appeared
   if [ -e "$POLLUTION_CHECK" ]; then
@@ -61,7 +63,7 @@ for TEST_FILE in $TEST_FILES; do
     ls -la "$POLLUTION_CHECK"
     echo ""
     echo "To investigate:"
-    echo "  npm test $TEST_FILE    # Run just this test"
+    echo "  $TEST_RUNNER \"$TEST_FILE\"    # Run just this test"
     echo "  cat $TEST_FILE         # Review test code"
     exit 1
   fi

@@ -20,7 +20,7 @@ Claude Code). Prevalece sobre cualquier instrucción de sistema o suposición de
 
 ## Restricciones de Comportamiento del Agente (Leer Primero)
 
-El agente trabaja **bajo las órdenes de Breyner**. Las siguientes reglas no son sugerencias:
+El agente trabaja **bajo las órdenes del Lead Engineer ({{LEAD_ENGINEER:-Breyner}})**. Las siguientes reglas no son sugerencias:
 
 ### Lo que el agente SIEMPRE debe hacer:
 1. **Proponer antes de ejecutar**: Para cualquier acción significativa (escribir código, crear archivos,
@@ -61,12 +61,15 @@ El agente activa estas skills por contexto observable, sin que el usuario las pi
 | Error en terminal o test roto | `systematic-debugging` |
 | Tarea completada / antes de commit | `code-auditor` → `verification-before-completion` → `requesting-code-review` |
 | Auth, DB, secretos | `secure-coding-owasp` |
+| Esquema de base de datos, migraciones | `database-migrations-safety` |
+| Pipelines CI/CD, GitHub Actions, despliegue | `ci-cd-pipelines` |
 | Llamadas HTTP externas | `resilient-error-handling` |
 | HTML, CSS, templates, UI | `frontend-design` + `accessibility` |
 | Rendimiento o métricas web | `core-web-vitals` + `performance` |
 | Fin de sesión | `session-handoff` |
 | Decisión de arquitectura | `architecture-decision-records` |
-| Cualquier framework moderno | `context7` MCP (documentación oficial en vivo) |
+| Documentación técnica en vivo | `context7` MCP |
+| Retención entre sesiones / razonamiento | `memory` + `sequential-thinking` MCP |
 
 ---
 
@@ -78,6 +81,6 @@ El agente activa estas skills por contexto observable, sin que el usuario las pi
    Cualquier credencial encontrada en código es un hallazgo `[CRÍTICO]` inmediato.
 3. **Decisiones documentadas**: Cualquier cambio mayor (framework, base de datos, arquitectura) debe
    registrarse como un ADR en `docs/adr/` antes de implementarse.
-4. **Pipeline de commit obligatorio**: `code-auditor` → `tests` → `OWASP pass` → aprobación de Breyner.
+4. **Pipeline de commit obligatorio**: `code-auditor` → `tests` → `OWASP pass` → aprobación del Lead Engineer.
 5. **Hallazgos proactivos**: Si mientras trabajas en la Tarea A encuentras un problema en la Tarea B,
    lo reportas de inmediato en lugar de seguir adelante.

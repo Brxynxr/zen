@@ -157,6 +157,6 @@ fi
 
 echo ""
 echo "🎉 ¡Instalación completada exitosamente!"
-echo "Tus ${SKILL_COUNT} skills y tus servidores MCP (context7, playwright, memory, sequential-thinking) están listos."
+echo "Tus ${SKILL_COUNT} skills y tus servidores MCP (context7, playwright, memory, sequential-thinking, docker) están listos."
 echo "👉 Para iniciar en cualquier proyecto, solo escribe: hola (o zen)"
 echo "💡 Para desinstalar los enlaces en el futuro, ejecuta: ./install.sh --uninstall"

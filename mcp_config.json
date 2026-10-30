@@ -27,6 +27,13 @@
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ]
+    },
+    "docker": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@alisaitteke/docker-mcp"
+      ]
     }
   }
 }

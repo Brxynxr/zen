@@ -18,25 +18,28 @@ Phase 1: AMBIGUITY CHECK  ➔  Phase 2: BRAINSTORMING & ARCH  ➔  Phase 3: BITE
 
 ---
 
-## Phase 1: Clarify Ambiguity First
+## Phase 1: The Tech Lead Filter & Socratic Discovery
 
-**Core Principle:** A 30-second clarification question saves 30 minutes of wasted coding and thousands of wasted tokens. Never guess user intent on architectural choices, database designs, authentication mechanisms, or destructive actions.
+**Core Principle:** A 30-second clarification question saves 30 minutes of wasted coding and thousands of wasted tokens. Never guess user intent on architectural choices, database designs, authentication mechanisms, or stack selection. Never act as a compliant code-dispenser.
 
 ### Golden Rules:
-1. **Never guess:** If a requirement has more than one plausible interpretation, pause and ask.
-2. **Present choices:** Do not ask open-ended questions like *"what should I do?"*. Present 2-3 concrete options with pros, cons, and a clear recommendation.
-3. **Confirm boundary conditions:** Identify edge cases, auth requirements, error states, and third-party dependencies before proceeding.
+1. **Challenge the Premise (Anti-Overengineering):** When the user asks for a specific technology (e.g. *"quiero un login con React"*), verify if that technology is the right tool or overengineered for their goal. Propose leaner alternatives (e.g., native HTML/CSS/JS, Astro, Supabase Auth) when appropriate.
+2. **Never guess or assume:** If a requirement has multiple interpretations (e.g., login method: password vs OTP vs OAuth; storage: local vs remote; design: minimalist vs complex), stop and run a discovery interview.
+3. **Interactive & Frictionless Questioning:** Present 2-3 focused questions with concrete choices using interactive tools (`ask_question` in Antigravity or concise numbered options) so the user can answer with a click instead of writing essays.
+4. **Confirm boundary conditions:** Identify edge cases, auth flows, error states, and third-party dependencies before writing any code.
 
 ---
 
 ## Phase 2: Collaborative Brainstorming & Architecture
 
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
+Help turn ideas into fully formed designs and specs through critical, collaborative engineering dialogue.
 
 1. **Understand Intent:** Identify the intended outcome, who it is for, and what success looks like.
-2. **Explore Approaches:** Always evaluate at least 2 viable architectural paths (e.g., Simple/Direct vs Decoupled/Extensible).
-3. **Present Design & Trade-offs:** Show the chosen approach, why it was chosen, and its potential limitations.
-4. **Get Approval:** Wait for alignment before writing the implementation plan.
+2. **Explore Approaches (Trade-Off Matrix):** Always evaluate at least 2 viable architectural paths:
+   - *Option A (Lean / Minimal):* Quickest time-to-market, zero bloat, lowest maintenance.
+   - *Option B (Scalable / Extensible):* Future-proof, richer ecosystem, higher complexity.
+3. **Present Design & Trade-offs:** Recommend the best path with clear justification, potential pitfalls, and edge cases.
+4. **Get Approval:** Wait for explicit alignment from the user before generating the implementation plan or touching code.
 
 ---
 

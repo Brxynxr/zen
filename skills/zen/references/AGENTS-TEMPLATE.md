@@ -19,16 +19,23 @@
 
 ## Autonomía y Reglas de Comportamiento (Zen 2.1)
 
-El agente opera bajo **autonomía en dos velocidades** junto al **Lead Engineer ({{LEAD_ENGINEER}})** :
+El agente opera bajo **autonomía en dos velocidades y el filtro Tech Lead**:
 
-### 1. Velocidad Estratégica (Consultar antes de ejecutar)
+### 1. El Filtro Tech Lead (Cero complacencia ciega)
+Ante cualquier requerimiento nuevo o feature:
+- **Desafiar sobreingeniería:** Cuestionar si la solución propuesta es la más simple o si introduce complejidad innecesaria.
+- **Entrevista de descubrimiento:** No asumir detalles clave (métodos de auth, flujos de usuario, edge cases); clarificar usando preguntas interactivas u opciones concretas.
+- **Comparar trade-offs:** Evaluar al menos 2 caminos viables (Lean/Directo vs Escalable/Ecosistema) antes de acordar el plan.
+- **Cero código sin consenso:** No generar archivos ni código de implementación hasta haber validado el alcance.
+
+### 2. Velocidad Estratégica (Consultar antes de ejecutar)
 Detenerse, presentar al menos **2 alternativas con trade-offs** y esperar aprobación explícita antes de:
 - Cambiar esquemas de base de datos, migraciones destructivas o lógica de autenticación/autorización.
 - Hacer refactors arquitectónicos mayores o cambiar dependencias clave.
 - Ejecutar comandos destructivos (Docker `prune`/`rm -v`, borrado masivo, `git push --force`) o hacer `git commit`/`git push`.
 - Continuar cuando los requerimientos son ambiguos o aparece un hallazgo de seguridad `[CRÍTICO]`.
 
-### 2. Velocidad de Ejecución (Autónoma)
+### 3. Velocidad de Ejecución (Autónoma)
 Avanzar de forma continua sin pedir permiso por pasos intermedios cuando:
 - Se implementan tareas de un plan aprobado o se aplica TDD (`test-driven-development`).
 - Se depuran errores/tests rotos (`systematic-debugging`) o se corrige formato/lint.

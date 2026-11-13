@@ -106,30 +106,24 @@ if [ -f "${MCP_SOURCE}" ] && command -v python3 >/dev/null 2>&1; then
     echo ""
     echo "🔌 Sincronizando servidores MCP (merge seguro sin borrar servidores existentes)..."
 
+    # Formato estándar mcpServers (Antigravity y Cursor)
     MCP_TARGETS=(
         "${HOME}/.gemini/config/mcp_config.json"
-        "${HOME}/.config/opencode/mcp_config.json"
     )
-
-    # Si existe directorio de Cursor, también añadir su configuración
     if [ -d "${HOME}/.cursor" ]; then
         MCP_TARGETS+=("${HOME}/.cursor/mcp.json")
     fi
 
     for target_mcp in "${MCP_TARGETS[@]}"; do
         mkdir -p "$(dirname "${target_mcp}")"
-        python3 - <<EOF
-import json, os
+        python3 - "${target_mcp}" "${MCP_SOURCE}" << 'EOF'
+import json, os, sys
 
-target_path = os.path.expanduser("${target_mcp}")
-source_path = os.path.expanduser("${MCP_SOURCE}")
+target_path = os.path.expanduser(sys.argv[1])
+source_path = os.path.expanduser(sys.argv[2])
 
-try:
-    with open(source_path, 'r', encoding='utf-8') as sf:
-        source_data = json.load(sf)
-except Exception as e:
-    print(f"   ❌ Error al leer fuente MCP: {e}")
-    exit(0)
+with open(source_path, 'r', encoding='utf-8') as sf:
+    source_data = json.load(sf)
 
 existing_data = {"mcpServers": {}}
 if os.path.exists(target_path) and not os.path.islink(target_path):
@@ -142,7 +136,6 @@ if os.path.exists(target_path) and not os.path.islink(target_path):
 if "mcpServers" not in existing_data or not isinstance(existing_data["mcpServers"], dict):
     existing_data["mcpServers"] = {}
 
-# Merge conservando servidores pre-existentes del usuario
 for k, v in source_data.get("mcpServers", {}).items():
     existing_data["mcpServers"][k] = v
 
@@ -150,13 +143,69 @@ with open(target_path, 'w', encoding='utf-8') as out:
     json.dump(existing_data, out, indent=2, ensure_ascii=False)
     out.write("\n")
 
-print(f"   ✅ [mcp_config sincronizado] -> {target_path}")
+print(f"   ✅ [mcpServers sincronizado] -> {target_path}")
 EOF
     done
+
+    # Formato nativo OpenCode v2: opencode.json bajo mcp.servers
+    OPENCODE_CFG="${HOME}/.config/opencode/opencode.json"
+    mkdir -p "$(dirname "${OPENCODE_CFG}")"
+    python3 - "${OPENCODE_CFG}" "${MCP_SOURCE}" << 'EOF'
+import json, os, sys
+
+target_path = os.path.expanduser(sys.argv[1])
+source_path = os.path.expanduser(sys.argv[2])
+
+with open(source_path, 'r', encoding='utf-8') as sf:
+    source_data = json.load(sf)
+
+existing_data = {"$schema": "https://opencode.ai/config.json"}
+if os.path.exists(target_path) and not os.path.islink(target_path):
+    try:
+        with open(target_path, 'r', encoding='utf-8') as tf:
+            existing_data = json.load(tf)
+    except Exception:
+        existing_data = {"$schema": "https://opencode.ai/config.json"}
+
+if "mcp" not in existing_data or not isinstance(existing_data["mcp"], dict):
+    existing_data["mcp"] = {}
+if "servers" not in existing_data["mcp"] or not isinstance(existing_data["mcp"]["servers"], dict):
+    existing_data["mcp"]["servers"] = {}
+
+for name, cfg in source_data.get("mcpServers", {}).items():
+    if "command" in cfg:
+        entry = {
+            "type": "local",
+            "command": [cfg["command"], *cfg.get("args", [])],
+        }
+        if cfg.get("env"):
+            entry["environment"] = cfg["env"]
+        existing_data["mcp"]["servers"][name] = entry
+    elif "url" in cfg:
+        existing_data["mcp"]["servers"][name] = {
+            "type": "remote",
+            "url": cfg["url"],
+        }
+
+with open(target_path, 'w', encoding='utf-8') as out:
+    json.dump(existing_data, out, indent=2, ensure_ascii=False)
+    out.write("\n")
+
+print(f"   ✅ [OpenCode mcp.servers sincronizado] -> {target_path}")
+EOF
+fi
+
+if command -v docker >/dev/null 2>&1; then
+    if ! docker info >/dev/null 2>&1; then
+        echo ""
+        echo "ℹ️  Nota Docker MCP: El demonio de Docker está inactivo ahora mismo."
+        echo "   El servidor MCP 'docker' no se conectará hasta iniciar Docker (ej. sudo systemctl start docker)."
+    fi
 fi
 
 echo ""
 echo "🎉 ¡Instalación completada exitosamente!"
 echo "Tus ${SKILL_COUNT} skills y tus servidores MCP (context7, playwright, memory, sequential-thinking, docker) están listos."
 echo "👉 Para iniciar en cualquier proyecto, solo escribe: hola (o zen)"
+echo "💡 Nota: Zen funciona de forma global sin crear archivos en tus proyectos; si deseas reglas locales, pídele crear AGENTS.md desde la plantilla."
 echo "💡 Para desinstalar los enlaces en el futuro, ejecuta: ./install.sh --uninstall"

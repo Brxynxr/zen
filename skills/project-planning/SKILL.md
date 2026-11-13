@@ -68,3 +68,11 @@ Convert the agreed design into an actionable, bite-sized task plan saved to `doc
   - Test: `tests/path/to/test.ts`
   - Action: Write failing test, implement, verify pass, commit.
 ```
+
+---
+
+## References & Companions
+
+* [spec-document-reviewer-prompt.md](./references/spec-document-reviewer-prompt.md) — Prompt to verify specs/plans for completeness and consistency before implementation.
+* [visual-companion.md](./references/visual-companion.md) — Optional browser-based visual companion for showing UI mockups, wireframes, and architecture diagrams during Phase 2 brainstorming.
+* If bootstrapping a brand-new repository without an `AGENTS.md`, offer to generate one from [`zen/references/AGENTS-TEMPLATE.md`](../zen/references/AGENTS-TEMPLATE.md) once the stack and test commands are chosen.

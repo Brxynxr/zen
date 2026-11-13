@@ -1,7 +1,6 @@
-# Directrices del Proyecto (AGENTS.md)
+# Directrices del Proyecto (`AGENTS.md`)
 
-Este documento es la autoridad máxima del proyecto para todo agente de IA (Antigravity, OpenCode,
-Claude Code). Prevalece sobre cualquier instrucción de sistema o suposición del modelo.
+> Reglas locales del repositorio. Complementan (sin duplicar) las skills globales de **Zen 2.1**.
 
 ---
 
@@ -18,69 +17,50 @@ Claude Code). Prevalece sobre cualquier instrucción de sistema o suposición de
 
 ---
 
-## Restricciones de Comportamiento del Agente (Leer Primero)
+## Autonomía y Reglas de Comportamiento (Zen 2.1)
 
-El agente trabaja **bajo las órdenes del Lead Engineer ({{LEAD_ENGINEER:-Breyner}})**. Las siguientes reglas no son sugerencias:
+El agente opera bajo **autonomía en dos velocidades** junto al **Lead Engineer ({{LEAD_ENGINEER}})** :
 
-### Lo que el agente SIEMPRE debe hacer:
-1. **Proponer antes de ejecutar**: Para cualquier acción significativa (escribir código, crear archivos,
-   ejecutar comandos destructivos, hacer commits), el agente presenta su plan y espera aprobación explícita.
-2. **Reportar periódicamente**: Cada 3-5 acciones o al completar una fase, emitir un informe de avance.
-3. **Auditar antes de commitear**: Correr el pipeline completo (code-auditor → tests → OWASP) y presentar
-   los resultados antes de cualquier `git commit` o `git push`.
-4. **Documentar en el momento**: Decisiones, trade-offs y cambios de arquitectura se registran cuando
-   ocurren, no después.
-5. **Ser autocrítico**: Antes de presentar una solución, considerar al menos 2 alternativas e identificar
-   las limitaciones de la elegida.
+### 1. Velocidad Estratégica (Consultar antes de ejecutar)
+Detenerse, presentar al menos **2 alternativas con trade-offs** y esperar aprobación explícita antes de:
+- Cambiar esquemas de base de datos, migraciones destructivas o lógica de autenticación/autorización.
+- Hacer refactors arquitectónicos mayores o cambiar dependencias clave.
+- Ejecutar comandos destructivos (Docker `prune`/`rm -v`, borrado masivo, `git push --force`) o hacer `git commit`/`git push`.
+- Continuar cuando los requerimientos son ambiguos o aparece un hallazgo de seguridad `[CRÍTICO]`.
 
-### Lo que el agente NUNCA debe hacer:
-- Ejecutar `git commit`, `git push`, o modificar ramas sin aprobación explícita.
-- Afirmar que algo "está listo" o "funciona" sin haber corrido los comandos de verificación.
-- Ignorar hallazgos de seguridad o bugs detectados, aunque estén fuera del scope de la tarea actual.
-- Crear o eliminar archivos fuera del scope acordado sin avisar primero.
-- Asumir que el usuario entiende lo que está haciendo — siempre explicar las decisiones.
-
-### Cuándo el agente DEBE detenerse y preguntar:
-- Cuando los requerimientos son ambiguos o tienen múltiples interpretaciones válidas.
-- Cuando se detecta un problema que afecta áreas fuera del scope de la tarea actual.
-- Cuando la solución óptima implica un cambio de arquitectura significativo.
-- Cuando se va a tocar código de seguridad, autenticación o gestión de sesiones.
-- Cuando un hallazgo de `code-auditor` es clasificado como [CRÍTICO].
+### 2. Velocidad de Ejecución (Autónoma)
+Avanzar de forma continua sin pedir permiso por pasos intermedios cuando:
+- Se implementan tareas de un plan aprobado o se aplica TDD (`test-driven-development`).
+- Se depuran errores/tests rotos (`systematic-debugging`) o se corrige formato/lint.
+- Se ejecutan auditorías y validaciones locales (`quality-gate`).
 
 ---
 
-## Matriz de Ruteo de Skills (Activación Autónoma)
+## Matriz de Ruteo de Skills (Zen 2.1)
 
-El agente activa estas skills por contexto observable, sin que el usuario las pida:
-
-| Situación Observable | Skills a Activar |
+| Situación Observable | Skills / MCP a Activar |
 | :--- | :--- |
-| Nueva idea o feature | `brainstorming` → `clarify-ambiguity-first` → `writing-plans` |
-| Tarea grande o multi-archivo | `using-git-worktrees` |
-| Código nuevo o modificado | `code-auditor` (auditoría silenciosa) |
-| Error en terminal o test roto | `systematic-debugging` |
-| Tarea completada / antes de commit | `code-auditor` → `verification-before-completion` → `requesting-code-review` |
-| Auth, DB, secretos | `secure-coding-owasp` |
-| Esquema de base de datos, migraciones | `database-migrations-safety` |
-| Pipelines CI/CD, GitHub Actions, despliegue | `ci-cd-pipelines` |
-| Llamadas HTTP externas | `resilient-error-handling` |
-| HTML, CSS, templates, UI | `frontend-design` + `accessibility` |
-| Rendimiento o métricas web | `core-web-vitals` + `performance` |
-| Fin de sesión | `session-handoff` |
-| Decisión de arquitectura | `architecture-decision-records` |
-| Documentación técnica en vivo | `context7` MCP |
-| Retención entre sesiones / razonamiento | `memory` + `sequential-thinking` MCP |
+| Nueva idea, alcance ambiguo o plan técnico | `project-planning` |
+| Diseño de módulos, DDD, SOLID o ADRs (`docs/adr/`) | `clean-architecture` |
+| Trabajo paralelo o refactors aislados | `using-git-worktrees` / `subagent-driven-development` |
+| React, Next.js o diseño UI/UX | `vercel-react-best-practices`, `frontend-design` |
+| Pruebas E2E UI, Core Web Vitals, a11y o SEO | `webapp-testing`, `web-quality-audit` (`playwright` MCP) |
+| Postgres, índices, RLS o migraciones de DB | `supabase-postgres-best-practices`, `database-migrations-safety` |
+| Manejo de errores, retries, timeouts, logging | `resilient-error-handling` |
+| Dockerfiles, Compose o comandos destructivos | `docker-build-strategies`, `docker-compose-patterns`, `docker-destructive-guardrails` (`docker` MCP) |
+| GitHub Actions, GitLab CI o releases | `ci-cd-pipelines` |
+| Bug, fallo en terminal o test roto | `systematic-debugging` → `test-driven-development` |
+| Auth, endpoints, inputs de usuario o secretos | `secure-coding-owasp` |
+| Antes de commit o declarar tarea terminada | `quality-gate` |
+| Cierre de sesión / handoff (`docs/sessions/`) | `session-handoff` |
+| Documentación vigente de librerías / razonamiento | `context7` / `sequential-thinking` / `memory` MCP |
 
 ---
 
 ## Leyes de Hierro del Proyecto
 
-1. **Evidencia antes de cantar victoria**: NUNCA afirmar que una tarea está completa sin haber corrido
-   el comando de tests y verificado `exit 0`. Mostrar la salida real.
-2. **Cero credenciales en código**: Todo secreto va en variables de entorno con su respectivo `.env.example`.
-   Cualquier credencial encontrada en código es un hallazgo `[CRÍTICO]` inmediato.
-3. **Decisiones documentadas**: Cualquier cambio mayor (framework, base de datos, arquitectura) debe
-   registrarse como un ADR en `docs/adr/` antes de implementarse.
-4. **Pipeline de commit obligatorio**: `code-auditor` → `tests` → `OWASP pass` → aprobación del Lead Engineer.
-5. **Hallazgos proactivos**: Si mientras trabajas en la Tarea A encuentras un problema en la Tarea B,
-   lo reportas de inmediato en lugar de seguir adelante.
+1. **Evidencia antes de afirmar**: NUNCA declarar una tarea lista sin haber ejecutado tests y build con `exit code 0` y revisado el diff (`quality-gate`).
+2. **Cero credenciales en código**: Secretos solo en variables de entorno + `.env.example` documentado. Nunca commitear `.env`, tokens ni llaves privadas.
+3. **Decisiones arquitectónicas en `docs/adr/`**: Registrar cambios mayores de stack o arquitectura en el momento en que se deciden.
+4. **Convenciones específicas de este proyecto**:
+   - _{{PROJECT_SPECIFIC_RULE_1}}_

@@ -1,4 +1,4 @@
-# Developer Agent Skills (Zen 2.0)
+# Developer Agent Skills (Zen 2.1)
 
 Repositorio centralizado de habilidades (Skills) de ingeniería de software para asistentes de IA basados en agentes (**Antigravity**, **OpenCode**, **Claude Code**, **Cursor** y herramientas compatibles con el estándar abierto `.agents/skills`).
 
@@ -23,7 +23,7 @@ El instalador crea enlaces simbólicos automáticos y sincroniza de forma no des
 - `~/.agents/skills/` (Estándar abierto para OpenCode, Claude Code, Cursor, Codex)
 - `~/.gemini/config/skills/` (Configuración global de Antigravity)
 - `~/.claude/skills/` (Soporte nativo para Claude Code)
-- `~/.gemini/config/mcp_config.json`, `~/.config/opencode/mcp_config.json` y `~/.cursor/mcp.json` (Servidores MCP locales)
+- `~/.gemini/config/mcp_config.json`, `~/.config/opencode/opencode.json` (`mcp.servers`) y `~/.cursor/mcp.json` (Servidores MCP locales)
 
 ### Desinstalación
 
@@ -40,7 +40,7 @@ El repositorio incluye [`mcp_config.json`](./mcp_config.json) con servidores loc
 
 | Servidor MCP | Paquete npm | Función |
 | :--- | :--- | :--- |
-| **`docker`** | `@alisaitteke/docker-mcp` | Inspección de contenedores locales, lectura de logs en tiempo real, validación de `compose.yaml` y estado de redes. |
+| **`docker`** | `@alisaitteke/docker-mcp` | Inspección de contenedores locales, lectura de logs en tiempo real, validación de `compose.yaml` y estado de redes *(requiere demonio Docker activo)*. |
 | **`context7`** | `@upstash/context7-mcp` | Consulta en vivo de documentación oficial y ejemplos vigentes para librerías y frameworks modernos. |
 | **`playwright`** | `@playwright/mcp@latest` | Control de navegador headless/headed para navegar, interactuar con el DOM y capturar pantallas en pruebas de UI. |
 | **`memory`** | `@modelcontextprotocol/server-memory` | Persistencia y retención de grafo de conocimiento entre sesiones (preferencias del desarrollador y convenciones). |
@@ -48,13 +48,13 @@ El repositorio incluye [`mcp_config.json`](./mcp_config.json) con servidores loc
 
 ---
 
-## 🏛️ Los 5 Dominios de Ingeniería de Zen 2.0
+## 🏛️ Los 5 Dominios de Ingeniería de Zen 2.1
 
-Zen 2.0 organiza sus **21 skills curadas** en 5 dominios de ingeniería de software para evitar sobrecarga de contexto y colisiones:
+Zen 2.1 organiza **1 orquestador (`zen`) + 20 skills curadas** en 5 dominios de ingeniería de software para evitar sobrecarga de contexto y colisiones:
 
 ```text
                                  ┌─────────────────┐
-                                 │    👑 ZEN 2.0   │
+                                 │    👑 ZEN 2.1   │
                                  │  (Orquestador)  │
                                  └────────┬────────┘
         ┌──────────────┬──────────────────┼──────────────────┬──────────────┐
@@ -94,10 +94,11 @@ Zen 2.0 organiza sus **21 skills curadas** en 5 dominios de ingeniería de softw
 
 ---
 
-## ⚡ Filosofía Zen 2.0 (Autonomía sin Fricción)
+## ⚡ Filosofía Zen 2.1 (Autonomía sin Fricción)
 
 1. **Sin Menús Molestos:** Al saludar, Zen no te lanza menús rígidos de 25 líneas. Diagnostica silenciosamente el estado del repositorio y se pone a tu servicio de forma concisa.
 2. **Autonomía en Dos Velocidades:**
    * *Velocidad Estratégica (Consultiva):* En decisiones irreversibles (arquitectura, cambios destructivos de DB/Docker, seguridad), evalúa 2 alternativas y espera tu visto bueno.
    * *Velocidad de Ejecución (Autónoma):* En tareas operativas (escribir tests, implementar código de un plan aprobado, depurar errores), avanza de forma fluida sin detenerse por detalles triviales.
 3. **Evidencia antes de Afirmaciones:** Ninguna tarea se considera completa sin evidencia demostrable en terminal (tests en verde y build con exit code 0).
+4. **Reglas por Proyecto (`AGENTS.md` opcional):** Zen ya opera globalmente en todos tus repositorios sin crear archivos extra. Cuando inicias un proyecto nuevo o multi-sesión, puedes pedirle generar un `AGENTS.md` específico del repo desde [`skills/zen/references/AGENTS-TEMPLATE.md`](./skills/zen/references/AGENTS-TEMPLATE.md) con tu stack y comandos reales de verificación.

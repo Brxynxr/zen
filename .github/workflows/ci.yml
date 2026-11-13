@@ -37,20 +37,34 @@ jobs:
           python3 -m py_compile skills/webapp-testing/scripts/with_server.py
           echo "✅ Python scripts compiled without syntax errors."
 
-      - name: Validate YAML frontmatter in SKILL.md files
+      - name: Validate Shell scripts syntax
+        run: |
+          bash -n install.sh uninstall.sh \
+            skills/docker-build-strategies/scripts/verify-build.sh \
+            skills/docker-compose-patterns/scripts/verify-compose.sh \
+            skills/web-quality-audit/scripts/analyze.sh \
+            skills/systematic-debugging/find-polluter.sh \
+            skills/subagent-driven-development/scripts/*
+          echo "✅ Shell scripts passed syntax check."
+
+      - name: Validate SKILL.md frontmatter, links & orphan references
         run: |
           python3 - << 'EOF'
-          import glob, sys
+          import glob, os, re, sys
 
-          skill_files = glob.glob("skills/*/SKILL.md")
+          skill_files = sorted(glob.glob("skills/*/SKILL.md"))
           if not skill_files:
               print("❌ No skill files found!")
               sys.exit(1)
 
+          link_re = re.compile(r'\[[^\]]+\]\(([^)]+)\)')
           failed = False
-          for f in sorted(skill_files):
+
+          for f in skill_files:
+              dir_name = os.path.basename(os.path.dirname(f))
               with open(f, 'r', encoding='utf-8') as fh:
                   content = fh.read()
+
               if not content.startswith("---"):
                   print(f"❌ Missing frontmatter start in {f}")
                   failed = True
@@ -61,11 +75,56 @@ jobs:
                   failed = True
                   continue
               front = parts[1]
-              if "name:" not in front or "description:" not in front:
+              name_m = re.search(r'^name:\s*(.+)$', front, re.MULTILINE)
+              if not name_m or "description:" not in front:
                   print(f"❌ Missing required name/description in {f}")
                   failed = True
+              elif name_m.group(1).strip().strip('"\'') != dir_name:
+                  print(f"❌ Skill name '{name_m.group(1).strip()}' does not match directory '{dir_name}' in {f}")
+                  failed = True
+
+              in_fence = False
+              for lineno, line in enumerate(content.splitlines(), 1):
+                  if line.strip().startswith("```"):
+                      in_fence = not in_fence
+                      continue
+                  if in_fence:
+                      continue
+                  if "superpowers:" in line:
+                      print(f"❌ Orphan superpowers: reference in {f}:{lineno}")
+                      failed = True
+                  for m in link_re.finditer(line):
+                      raw = m.group(1).strip()
+                      target = raw.split("#", 1)[0].strip()
+                      if not target or target.startswith(("http://", "https://", "mailto:")):
+                          continue
+                      resolved = os.path.normpath(os.path.join(os.path.dirname(f), target))
+                      if not os.path.exists(resolved):
+                          print(f"❌ Broken relative link in {f}:{lineno} -> {raw}")
+                          failed = True
+
+          for extra in ["README.md", "skills/zen/references/AGENTS-TEMPLATE.md"]:
+              if os.path.exists(extra):
+                  with open(extra, 'r', encoding='utf-8') as fh:
+                      content = fh.read()
+                  in_fence = False
+                  for lineno, line in enumerate(content.splitlines(), 1):
+                      if line.strip().startswith("```"):
+                          in_fence = not in_fence
+                          continue
+                      if in_fence:
+                          continue
+                      for m in link_re.finditer(line):
+                          raw = m.group(1).strip()
+                          target = raw.split("#", 1)[0].strip()
+                          if not target or target.startswith(("http://", "https://", "mailto:")):
+                              continue
+                          resolved = os.path.normpath(os.path.join(os.path.dirname(extra), target))
+                          if not os.path.exists(resolved):
+                              print(f"❌ Broken relative link in {extra}:{lineno} -> {raw}")
+                              failed = True
 
           if failed:
               sys.exit(1)
-          print(f"✅ Verified frontmatter for {len(skill_files)} skills.")
+          print(f"✅ Verified frontmatter, links, and references for {len(skill_files)} skills.")
           EOF

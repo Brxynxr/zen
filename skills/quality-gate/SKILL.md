@@ -53,3 +53,9 @@ Once the gate passes, present a concise report to the Lead Engineer:
 - Diff: [N files modified, 0 secrets/lint issues]
 - Proposed commit: "[type]: [description]"
 ```
+
+---
+
+## References
+
+* [code-reviewer.md](./references/code-reviewer.md) — Structured code-review rubric and checklist for reviewing large diffs or subagent deliveries before committing.

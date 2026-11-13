@@ -1,6 +1,6 @@
 {
   "name": "zen",
-  "description": "Master Engineering Orchestrator: 21 curated skills across 5 domains, 5 local MCP servers (including Docker), and agile engineering discipline.",
-  "version": "2.0.0",
+  "description": "Master Engineering Orchestrator: 1 orchestrator + 20 curated domain skills across 5 domains, 5 local MCP servers (including Docker), and agile engineering discipline.",
+  "version": "2.1.0",
   "author": "Breyner Manga"
 }

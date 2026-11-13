@@ -1,6 +1,6 @@
 ---
 name: docker-destructive-guardrails
-description: Use this skill before running, or recommending, any Docker command that deletes, wipes, resets, or otherwise irreversibly changes state — even if the user just says to "clean up", "clear the cache", "start fresh", "wipe everything", "nuke it", "reset", "force remove", or "tear down" Docker resources. Covers generic Docker CLI destructive operations not owned by a more specific skill — `docker rm`, `docker rm -f`, `docker container prune`, `docker kill`, `docker system prune`, `docker rmi`/`docker image rm`, `docker image prune -a`, `docker network rm`, `docker network prune`, `docker builder prune`, `docker buildx rm`, `docker context rm`, and standalone (non-Compose) `docker volume rm`/`docker volume prune`. Also indexes destructive commands owned by other Docker skills (Compose, sandbox, Desktop). Core rule — state exactly what will be lost and get explicit confirmation first, except narrow, low-friction Tier 1 container cleanup.
+description: "Safety guardrail before any Docker command that deletes, prunes, kills, or resets state (`docker rm`, `rm -f`, `prune`, `kill`, `rmi`, `volume rm`, `buildx rm`, or asks to clean up/wipe/reset/tear down Docker). State exactly what will be lost and confirm first (except narrow Tier 1 container cleanup)."
 license: Apache-2.0
 compatibility: Applies to any Docker CLI version. This is a behavioral guardrail skill, not a Dockerfile or Compose authoring skill.
 ---
